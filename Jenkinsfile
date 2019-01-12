@@ -2,8 +2,8 @@ pipeline {
   agent any
 
   environment {
-    taga = sh(returnStdout: true, script: "git describe --tags").trim()
-    brancha = sh(returnStdout: true, script: "git rev-parse --abbrev-ref HEAD").trim()
+    //tag = sh(returnStdout: true, script: "git describe --tags").trim()
+    branch = sh(returnStdout: true, script: "git rev-parse --abbrev-ref HEAD").trim()
   }
 
   stages {
@@ -15,9 +15,7 @@ pipeline {
 
     stage('Git Info') {
       steps {
-        echo taga
-        echo brancha
-        echo tag
+        //echo tag
         echo branch
       }
     }
