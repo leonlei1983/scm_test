@@ -17,6 +17,7 @@ pipeline {
       steps {
         //echo tag
         echo branch
+        sh 'git branch'
       }
     }
   }
