@@ -1,9 +1,9 @@
 pipeline {
   agent any
 
-  environment {
+  //environment {
     //tag = sh(returnStdout: true, script: "git describe --tags").trim()
-  }
+  //}
 
   stages {
     stage('Build') {
