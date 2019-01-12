@@ -13,7 +13,7 @@ pipeline {
       }
     }
 
-    stage('Build') {
+    stage('Git Info') {
       steps {
         echo taga
         echo brancha
