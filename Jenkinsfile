@@ -5,6 +5,8 @@ pipeline {
     //tag = sh(returnStdout: true, script: "git describe --tags").trim()
   //}
 
+  def tag = sh(returnStdout: true, script: "git describe --tags").trim()
+
   stages {
     stage('Build') {
       steps {
@@ -16,7 +18,6 @@ pipeline {
       steps {
         echo "${env.BRANCH_NAME}"
         sh 'printenv'
-        def tag = sh(returnStdout: true, script: "git describe --tags")
         echo "${tag}"
       }
     }
