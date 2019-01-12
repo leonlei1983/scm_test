@@ -13,7 +13,7 @@ node {
   } else {
     def tag_name = 'aa'
   }
-  if (env.tag_name) {
+  catchError {
     echo tag_name
   }
 }
