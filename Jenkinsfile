@@ -10,8 +10,10 @@ node {
   def hastag = sh(returnStatus: true, returnStdout: false, script: 'git describe --tags')
   if (hastag == 0) {
     def tag_name = sh(returnStdout: true, script: 'git describe --tags').trim()
+  } else {
+    def tag_name = 'aa'
   }
-  if (tag_name!=NULL) {
+  if (env.tag_name) {
     echo tag_name
   }
 }
