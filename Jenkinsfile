@@ -13,7 +13,9 @@ node {
   } else {
     def tag_name = 'aa'
   }
-  catchError {
-    echo tag_name
+  try {
+      echo tag_name
+  } catch (err) {
+      echo err
   }
 }
