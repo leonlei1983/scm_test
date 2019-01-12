@@ -9,8 +9,10 @@ node {
   sh 'printenv'
 
   def tag_name = 'latest'
-  if (hastag == 0) {
+  try {
     tag_name = sh(returnStdout: true, script: 'git describe --tags').trim()
+  } catch() {
+    //
   }
   echo tag_name
 }
