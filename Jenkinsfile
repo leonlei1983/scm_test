@@ -11,7 +11,7 @@ node {
 
   def tag_name = NULL
   if (hastag == 0) {
-    def tag_name = sh(returnStdout: true, script: 'git describe --tags').trim()
+    tag_name = sh(returnStdout: true, script: 'git describe --tags').trim()
   }
   try {
     echo tag_name
