@@ -14,13 +14,15 @@ pipeline {
 
     stage('Git Info') {
       environment {
-        gittag = sh(returnStdout: true, script: "git describe --tags || echo").trim()
+        catchError {
+          gittag = sh(returnStdout: true, script: "git describe --tags || echo").trim()
+        }
       }
       steps {
-        //sh 'printenv'
-        //echo "${gittag}"
-        //echo "${env.BRANCH_NAME}"
+        echo "${gittag}"
+        echo "${env.BRANCH_NAME}"
         sh 'git tag -l'
+        sh 'printenv'
       }
     }
   }
