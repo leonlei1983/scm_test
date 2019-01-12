@@ -6,5 +6,5 @@ node {
   stage 'Push'
   // docker push
   sh 'ls -l'
-  printenv
+  sh 'printenv'
 }
