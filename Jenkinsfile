@@ -13,15 +13,11 @@ pipeline {
     }
 
     stage('Git Info') {
-      steps {
-        echo "${env.BRANCH_NAME}"
-        sh 'printenv'
+      def tag = sh(returnStdout: true, script: "git describe --tags").trim()
 
-        def files = sh(returnStdout: true, script: "ls")
-        echo "${files}"
-        //def tag = sh(returnStdout: true, script: "git describe --tags").trim()
-        //echo "${tag}"
-      }
+      echo "${env.BRANCH_NAME}"
+      sh 'printenv'
+      echo "${tag}"
     }
   }
 }
