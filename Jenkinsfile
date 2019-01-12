@@ -11,7 +11,7 @@ node {
   def tag_name = 'latest'
   try {
     tag_name = sh(returnStdout: true, script: 'git describe --tags').trim()
-  } catch() {
+  } catch(err) {
     //
   }
   echo tag_name
