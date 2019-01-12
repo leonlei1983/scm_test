@@ -7,6 +7,9 @@ node {
   // docker push
   sh 'ls -l'
   sh 'printenv'
-  def tag_name = sh(eturnStdout: true, script: 'git describe --tags').trim()
+  def hastag = sh(returnStatus: true, script: 'git describe --tags')
+  if (hastag) {
+    def tag_name = sh(eturnStdout: true, script: 'git describe --tags').trim()
+  }
   echo tag_name
 }
