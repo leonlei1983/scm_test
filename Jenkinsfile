@@ -16,7 +16,7 @@ pipeline {
       steps {
         echo "${env.BRANCH_NAME}"
         sh 'printenv'
-        tag = sh(returnStdout: true, script: "git describe --tags").trim()
+        def tag = sh(returnStdout: true, script: "git describe --tags").trim()
         echo "${tag}"
       }
     }
