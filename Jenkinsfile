@@ -14,10 +14,11 @@ pipeline {
 
     stage('Git Info') {
       environment {
-        tag_name = sh(returnStdout: true, script: "git describe --tags")
+        tag_obj = sh(returnStatus: true, returnStdout: true, returnStderr: true, script: "git describe --tags")
+        //tag_name = tag_obj.getStdout()
       }
       steps {
-        echo "${tag_name}"
+        //echo "${tag_name}"
         echo "${env.BRANCH_NAME}"
         sh 'git tag -l'
         sh 'printenv'
