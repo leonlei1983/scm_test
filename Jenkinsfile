@@ -9,7 +9,7 @@ node {
   sh 'printenv'
   def hastag = sh(returnStatus: true, returnStdout: false, script: 'git describe --tags')
 
-  def tag_name = NULL
+  def tag_name = ''
   if (hastag == 0) {
     tag_name = sh(returnStdout: true, script: 'git describe --tags').trim()
   }
