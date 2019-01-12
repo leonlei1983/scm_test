@@ -14,8 +14,8 @@ node {
     def tag_name = 'aa'
   }
   try {
-      echo tag_name
+    echo tag_name
   } catch (err) {
-      echo err
+    //
   }
 }
