@@ -17,9 +17,9 @@ pipeline {
         gittag = sh(returnStdout: true, script: "git describe --tags || echo").trim()
       }
       steps {
-        sh 'printenv'
-        echo "${gittag}"
-        echo "${env.BRANCH_NAME}"
+        //sh 'printenv'
+        //echo "${gittag}"
+        //echo "${env.BRANCH_NAME}"
         sh 'git tag -l'
       }
     }
