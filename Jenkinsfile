@@ -14,8 +14,6 @@ pipeline {
     }
 
     stage('Build') {
-      def tag = sh(returnStdout: true, script: "git describe --tags").trim()
-      def branch = sh(returnStdout: true, script: "git rev-parse --abbrev-ref HEAD").trim()
       steps {
         echo taga
         echo brancha
