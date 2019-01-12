@@ -11,5 +11,7 @@ node {
   if (hastag == 0) {
     def tag_name = sh(returnStdout: true, script: 'git describe --tags').trim()
   }
-  echo tag_name
+  if (tag_name) {
+    echo tag_name
+  }
 }
