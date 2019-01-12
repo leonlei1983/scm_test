@@ -18,6 +18,7 @@ pipeline {
         //echo tag
         echo branch
         sh 'git branch'
+        echo '${env.BRANCH_NAME}'
       }
     }
   }
