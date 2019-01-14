@@ -24,7 +24,7 @@ node {
     docker.withServer(docker_registry) {
       docker_img = docker.build(
         "${build_env}/${product_name}",
-        "-f kubernetes/Dockerfile --build-arg RAILS_ENV=${rails_env}"
+        "-f kubernetes/Dockerfile --build-arg RAILS_ENV=${rails_env} ."
       )
     }
 
