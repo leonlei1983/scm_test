@@ -1,4 +1,5 @@
 node {
+  checkout scm
   def docker_registry = env.DOCKER_REGISTRY ?: 'https://registry.tarokosoftware.io'
   def docker_img = ''
 
