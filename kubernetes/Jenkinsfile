@@ -3,7 +3,8 @@ node {
   def docker_img = ''
 
   stage('Build') {
-    def product_name = env.JOB_NAME ?: 'demo'
+    //def product_name = env.JOB_NAME ?: 'demo'
+    def product_name = 'demo'
     def build_env = 'develop'
     def rails_env = 'development'
     echo "${env.BRANCH_NAME}"
