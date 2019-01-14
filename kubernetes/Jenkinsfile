@@ -2,14 +2,17 @@ node {
   checkout scm
   def docker_registry = env.DOCKER_REGISTRY ?: 'registry.tarokosoftware.io'
   def docker_img = ''
+  def build_version = ''
+  try {
+    build_version = sh(returnStdout: true, script: 'git describe --tags').trim()
+  } catch(err) {
+  }
 
   stage('Build') {
     //def product_name = env.JOB_NAME ?: 'demo'
     def product_name = 'demo'
     def build_env = 'develop'
     def rails_env = 'development'
-    echo "${env.BRANCH_NAME}"
-    sh 'printenv'
     switch (env.BRANCH_NAME) {
     case ~/^release\/.*/:
       build_env = 'staging'
@@ -24,24 +27,23 @@ node {
       error "Not support build docker image with branch name: ${env.BRANCH_NAME}"
     }
 
-    sh 'pwd'
-    sh 'ls -la'
-    echo docker_registry
-    docker.withRegistry(docker_registry, 'registry') {
-      docker_img = docker.build(
-        "${build_env}/${product_name}",
-        "-f kubernetes/Dockerfile --build-arg RAILS_ENV=${rails_env} ."
-      )
-    }
+    docker_img = docker.build(
+      "${build_env}/${product_name}",
+      "-f kubernetes/Dockerfile --build-arg RAILS_ENV=${rails_env} ."
+    )
 
     if (!docker_img) {
       error "fail to build docker image"
     }
   }
 
-  //stage('Push') {
-  //  docker.withRegistry(docker_registry, 'registry') {
-  //    docker_img.push('1.0.0')
-  //  }
-  //}
+  stage('Push') {
+    docker.withRegistry(docker_registry, 'registry') {
+      if (build_version) {
+        docker_img.push(build_version)
+      } else {
+        docker_img.push()
+      }
+    }
+  }
 }
