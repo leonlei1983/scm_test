@@ -3,11 +3,14 @@ node {
   def docker_registry = env.DOCKER_REGISTRY ?: 'registry.tarokosoftware.io'
   def docker_img = ''
   def build_version = ''
-  try {
-    build_version = sh(returnStdout: true, script: 'git describe --tags').trim()
-  } catch(exc) {}
 
   try {
+      stage('Prepare Variables') {
+        try {
+          build_version = sh(returnStdout: true, script: 'git describe --tags').trim()
+        } catch(exc) {}
+      }
+
       stage('Build') {
         //def product_name = env.JOB_NAME ?: 'demo'
         def product_name = 'demo'
@@ -47,6 +50,6 @@ node {
         }
       }
   } finally {
-    echo currentBuild.result
+    // slack notification
   }
 }
