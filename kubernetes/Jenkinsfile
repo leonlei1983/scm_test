@@ -17,6 +17,8 @@ node {
       build_env = 'production'
       rails_env = 'production'
       break
+    case 'develop':
+      break
     default:
       error "Not support build docker image with branch name: ${env.BRANCH_NAME}"
     }
