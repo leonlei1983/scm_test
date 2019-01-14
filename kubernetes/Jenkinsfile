@@ -6,6 +6,8 @@ node {
     def product_name = env.JOB_NAME ?: 'demo'
     def build_env = 'develop'
     def rails_env = 'development'
+    echo "${env.BRANCH_NAME}"
+    sh 'printenv'
     switch (env.BRANCH_NAME) {
     case ~/^release\/.*/:
       build_env = 'staging'
