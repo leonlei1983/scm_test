@@ -39,9 +39,9 @@ node {
     }
   }
 
-  stage('Push') {
-    docker.withRegistry(docker_registry, 'registry') {
-      docker_img.push('1.0.0')
-    }
-  }
+  //stage('Push') {
+  //  docker.withRegistry(docker_registry, 'registry') {
+  //    docker_img.push('1.0.0')
+  //  }
+  //}
 }
