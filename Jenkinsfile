@@ -1,4 +1,5 @@
 node {
+
   stage 'Build'
   // docker build
   echo "${env.BRANCH_NAME}"
