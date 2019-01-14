@@ -25,7 +25,7 @@ node {
 
     sh 'pwd'
     sh 'ls -la'
-    docker.withServer(docker_registry, 'registry') {
+    docker.withRegistry(docker_registry, 'registry') {
       docker_img = docker.build(
         "${build_env}/${product_name}",
         "-f kubernetes/Dockerfile --build-arg RAILS_ENV=${rails_env} ."
