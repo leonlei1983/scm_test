@@ -1,47 +1,55 @@
 node {
+  checkout scm
   def docker_registry = env.DOCKER_REGISTRY ?: 'registry.tarokosoftware.io'
   def docker_img = ''
+  def build_version = ''
 
-  stage('Build') {
-    //def product_name = env.JOB_NAME ?: 'demo'
-    def product_name = 'demo'
-    def build_env = 'develop'
-    def rails_env = 'development'
-    echo "${env.BRANCH_NAME}"
-    sh 'printenv'
-    switch (env.BRANCH_NAME) {
-    case ~/^release\/.*/:
-      build_env = 'staging'
-      rails_env = 'staging'
-    case 'master':
-      build_env = 'production'
-      rails_env = 'production'
-      break
-    default:
-      error "Not support build docker image with branch name: ${env.BRANCH_NAME}"
-    }
+  try {
+      stage('Prepare Variables') {
+        try {
+          build_version = sh(returnStdout: true, script: 'git describe --tags').trim()
+        } catch(exc) {}
+      }
 
-    sh 'pwd'
-    sh 'ls -la'
-    docker.withServer(docker_registry) {
-      docker_img = docker.build(
-        "${build_env}/${product_name}",
-        "-f kubernetes/Dockerfile --build-arg RAILS_ENV=${rails_env} ."
-      )
-    }
+      stage('Build') {
+        //def product_name = env.JOB_NAME ?: 'demo'
+        def product_name = 'demo'
+        def build_env = 'develop'
+        def rails_env = 'development'
+        switch (env.BRANCH_NAME) {
+        case ~/^release\/.*/:
+          build_env = 'staging'
+          rails_env = 'staging'
+        case 'master':
+          build_env = 'production'
+          rails_env = 'production'
+          break
+        case 'develop':
+          break
+        default:
+          error "Not support build docker image with branch name: ${env.BRANCH_NAME}"
+        }
 
-    if (!docker_img) {
-      error "fail to build docker image"
-    }
-  }
+        docker_img = docker.build(
+          "${build_env}/${product_name}",
+          "-f kubernetes/Dockerfile --build-arg RAILS_ENV=${rails_env} ."
+        )
 
-  stage('Push') {
-    docker.withServer(docker_registry) {
-      docker_img.push()
-    }
-  }
+        if (!docker_img) {
+          error "fail to build docker image"
+        }
+      }
 
-  post {
-    // notify
+      stage('Push') {
+        docker.withRegistry(docker_registry, 'registry') {
+          if (build_version) {
+            docker_img.push(build_version)
+          } else {
+            docker_img.push()
+          }
+        }
+      }
+  } finally {
+    // slack notification
   }
 }
