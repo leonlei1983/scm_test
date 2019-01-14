@@ -1,6 +1,6 @@
 node {
   def docker_registry = env.DOCKER_REGISTRY ?: 'registry.tarokosoftware.io'
-  def docker_img = NULL
+  def docker_img = ''
 
   stage('Build') {
     def product_name = env.JOB_NAME ?: 'demo'
