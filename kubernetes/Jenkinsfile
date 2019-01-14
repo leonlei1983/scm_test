@@ -21,6 +21,7 @@ node {
       error "Not support build docker image with branch name: ${env.BRANCH_NAME}"
     }
 
+    sh 'pwd'
     docker.withServer(docker_registry) {
       docker_img = docker.build(
         "${build_env}/${product_name}",
