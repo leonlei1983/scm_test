@@ -1,4 +1,4 @@
-node('build') {
+node {
   def docker_registry = env.DOCKER_REGISTRY ?: 'registry.tarokosoftware.io'
   def docker_img = NULL
 
