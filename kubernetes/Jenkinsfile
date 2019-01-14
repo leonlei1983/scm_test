@@ -25,6 +25,7 @@ node {
 
     sh 'pwd'
     sh 'ls -la'
+    sh 'cat kubernetes/Jenkinsfile'
     docker.withRegistry(docker_registry, 'registry') {
       docker_img = docker.build(
         "${build_env}/${product_name}",
