@@ -35,7 +35,7 @@ node {
               branch: 'master',
               credentialsId: 'github2'
           ansiColor('xterm') {
-            sh 'ansible-playbook -i inventories/localhost playbooks/build_prepare.yml -e 'APP_TYPE=rails' -e 'APP_ENV=${rails_env}' -e 'PRODUCT_NAME=${product_name}
+            sh 'ansible-playbook -i inventories/localhost playbooks/build_prepare.yml -e 'APP_TYPE=rails' -e 'APP_ENV=${rails_env}' -e 'PRODUCT_NAME=${product_name}'
           }
         }
       }
