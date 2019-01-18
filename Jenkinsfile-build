@@ -1,5 +1,14 @@
 node {
   checkout scm
+  def build_version = env.TAG_NAME ?: ''
 
-  sh 'printenv'
+  stage('Initialization') {
+  // variables
+  try {
+    build_version = build_version ?: sh(returnStdout: true, script: 'git describe --tags').trim()
+  } catch(err) {
+    // cannot get current git tag
+  }
+
+  echo build_version
 }
