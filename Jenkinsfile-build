@@ -3,12 +3,13 @@ node {
   def build_version = env.TAG_NAME ?: ''
 
   stage('Initialization') {
-  // variables
-  try {
-    build_version = build_version ?: sh(returnStdout: true, script: 'git describe --tags').trim()
-  } catch(err) {
-    // cannot get current git tag
-  }
+    // variables
+    try {
+      build_version = build_version ?: sh(returnStdout: true, script: 'git describe --tags').trim()
+    } catch(err) {
+      // cannot get current git tag
+    }
 
-  echo build_version
+    echo build_version
+  }
 }
